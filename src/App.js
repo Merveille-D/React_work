@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/app.css'
+import { Card } from "./components/Card";
+import { Banner } from "./components/Banner";
+import { ShoppingList } from "./components/ShortplantList";
+import { Footer } from "./components/Footer";
+import { useState } from "react";
+import { useEffect } from "react";
+function App(){   
+ const savecard= localStorage.getItem('card')
+ const[card,updatecard]=useState(savecard? JSON.parse(savecard) : [])
+  useEffect(() => {
+  localStorage.setItem('card', JSON.stringify(card))
+  }, [card])
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return (<div>
+            <Banner props='Ici achetez toutes les plantes dont vous avez toujours rêvées' />
+            <div className='lmj-layout-inner '>
+            <Card card={card} updatecard={updatecard}/>
+            <ShoppingList  card={card} updatecard={updatecard}/>
+            </div>
+            <Footer/>
+          </div>)
+
+
 }
+
 
 export default App;
